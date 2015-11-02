@@ -20,3 +20,7 @@ coverage.xml
 out
 gen
 # Created by .ignore support plugin (hsz.mobi)
+
+*.sqlite
+
+migrations/
