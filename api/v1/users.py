@@ -16,7 +16,6 @@ def create_user():
     details = [email, username, password]
 
     if not all(details):
-        print " I reach is very point"
         return bad_request("you must supply email, username and password")
     if User.query.filter_by(email=email).first() is not None and User.query.filter_by(username=username) is not None:
         return forbidden("email or username already exist")
@@ -34,7 +33,6 @@ def login():
 
     username = request.json.get('username')
     password = request.json.get('password')
-    print " I reach is very point"
 
     if verify_password(username, password):
         token = g.user.generate_auth_token()

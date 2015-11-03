@@ -27,6 +27,8 @@ class TestAPI(unittest.TestCase):
 
         self.client = self.app.test_client()
 
+
+
     def tearDown(self):
         db.session.remove()
         db.drop_all()
@@ -49,9 +51,9 @@ class TestAPI(unittest.TestCase):
             url_for('api.create_user'),
             headers=self.get_api_headers('jubril', 'chiditheboss'),
             data=json.dumps({
-                'username': 'Lagbaja',
-                'email':'lagbaja@somedomain.com',
-                'password': 'nothing',
+                'username': 'nad',
+                'email':'nad@andela.com',
+                'password': 'i am awesome',
             })
         )
         print "I am ", response.status_code
