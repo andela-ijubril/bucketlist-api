@@ -1,7 +1,6 @@
 from ..models import User
 from flask import request, jsonify, g
 from ..errors import bad_request, forbidden
-from ..decorators import json
 from . import api
 from ..auth import verify_password
 

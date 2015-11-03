@@ -30,9 +30,6 @@ class TestAPI(unittest.TestCase):
         self.client = self.app.test_client()
 
 
-
-
-
         test_user = User(username="padi", email="padi@gmail.com", password_hash="padimi")
 
 
@@ -46,34 +43,6 @@ class TestAPI(unittest.TestCase):
 
         item.save()
         self.client = self.app.test_client()
-
-
-
-
-        # log the user in and get authentication token:
-        # response = self.client.post(
-        #     url_for('login'),
-        #     headers=self.get_api_headers(),
-        #     data=json.dumps({
-        #         'username': 'jubril',
-        #         'password': 'anything',
-        #     })
-        # )
-        # self.access_token = json.loads(response.data).get('access_token')
-
-        # fix the db with sample bucketlists for the user:
-        # bucketlist_1 = Bucketlist(name="The test Wishlist", created_by=self.user)
-        # db.session.add(bucketlist_1)
-        # db.session.commit()
-        #
-        # # fix the db with sample bucketlists items for the bucketlist_3:
-        # item_1 = Item(name="Bungee off the Brooklyn Bridge", done=False, bucketlist=bucketlist_1)
-        # db.session.add(item_1)
-        # item_2 = Item(name="Kayak across the Atlantic", done=False, bucketlist=bucketlist_1)
-        # db.session.add(item_2)
-        # item_3 = Item(name="Scuba dive in the Mariannah Trench", done=False, bucketlist=bucketlist_1)
-        # db.session.add(item_3)
-        # db.session.commit()
 
     def tearDown(self):
         db.session.remove()

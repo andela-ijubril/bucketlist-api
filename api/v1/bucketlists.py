@@ -11,8 +11,9 @@ from api import create_app
 
 
 # @api.before_request
-@auth.login_required
+
 @api.route('/bucketlist/', methods=['POST'])
+@auth.login_required
 # @json
 def create_bucketlist():
 
@@ -27,26 +28,27 @@ def create_bucketlist():
     return jsonify({'message': "Your bucketlist was created successfully"})
 
 
-@api.before_request
-@auth.login_required
+
+
 @api.route('/bucketlists/')
+@auth.login_required
 # @json
 # @collection(Bucketlist)
 def get_bucketlists():
 
-    # fetch the pagination options:
+
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('limit', current_app.config['RESULTS_PER_PAGE'], type=int)
 
-    # ensure that items per page does not pass the maximum:
+
     max_per_page = current_app.config['MAX_PER_PAGE']
     if per_page > max_per_page:
         per_page = max_per_page
 
-    # fetch any search key specified:
+
     q = request.args.get('q', "", type=str)
 
-    # paginate user's [searched] bucketlists:
+
     pagination = Bucketlist.query.\
                  filter_by(created_by=g.user.id).\
                  filter(Bucketlist.name.ilike("%{}%".format(q))).\
@@ -54,18 +56,18 @@ def get_bucketlists():
                            per_page=per_page,
                            error_out=False)
 
-    # get current page of user's bucketlists:
+
     bucketlists = pagination.items
 
-    # get url to the previous page:
+
     prev_url = url_for('api.get_bucketlists', limit=per_page, page=page-1, _external=True)\
                if pagination.has_prev else None
 
-    # get url for the next page:
+
     next_url = url_for('api.get_bucketlists', limit=per_page, page=page+1, _external=True)\
                if pagination.has_next else None
 
-    # return the json response:
+
     return jsonify({
         "bucketlists": [bucketlist.to_json() for bucketlist in bucketlists],
         "current_page": page,
@@ -75,9 +77,9 @@ def get_bucketlists():
     }), 200
 
 
-@api.before_request
-@auth.login_required
+
 @api.route('/bucketlists/<int:id>/', methods=['GET', 'PUT', 'DELETE'])
+@auth.login_required
 def get_bucketlist(id):
 
     bucketlist = Bucketlist.query.filter_by(created_by=g.user.id).filter_by(id=id).first()

@@ -6,8 +6,8 @@ from ..models import Item, Bucketlist
 from datetime import datetime
 
 
-@auth.login_required
 @api.route('/bucketlist/<int:bucketlist_id>/items/', methods=['POST'])
+@auth.login_required
 def create_item(bucketlist_id):
 
     name = request.json.get('name')
@@ -21,8 +21,8 @@ def create_item(bucketlist_id):
     return jsonify({'message': "Your bucketlist Items was created successfully"})
 
 
-@auth.login_required
 @api.route('/bucketlist/<int:bucketlist_id>/items/<int:item_id>', methods=['PUT', 'DELETE'])
+@auth.login_required
 def bucket_item(bucketlist_id, item_id):
     bucketlist = Bucketlist.query.filter_by(created_by=g.user.id).filter_by(id=bucketlist_id).first()
 
