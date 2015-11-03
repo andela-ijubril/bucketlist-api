@@ -10,7 +10,7 @@ from ..decorators import json, collection
 from api import create_app
 
 
-@api.before_request
+# @api.before_request
 @auth.login_required
 @api.route('/bucketlist/', methods=['POST'])
 # @json

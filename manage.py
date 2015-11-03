@@ -14,23 +14,6 @@ manager.add_command('db', MigrateCommand)
 
 
 @manager.command
-def adduser(username):
-    """Register a new user."""
-    from getpass import getpass
-    password = getpass()
-    password2 = getpass(prompt='Confirm: ')
-    if password != password2:
-        import sys
-        sys.exit('Error: passwords do not match.')
-    db.create_all()
-    user = User(username=username, password=password)
-    db.session.add(user)
-    db.session.commit()
-    print('User {0} was registered successfully.'.format(username))
-
-
-
-@manager.command
 def test():
     """Run the unit tests."""
     import unittest

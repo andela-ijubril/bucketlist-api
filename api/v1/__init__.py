@@ -1,10 +1,9 @@
-__author__ = 'Jubril'
 from flask import Blueprint, g, url_for
 from ..auth import auth
 
 api = Blueprint('api', __name__)
 
-from . import users, bucketlists, items
+from . import users, bucketlists, items, auth
 
 
 

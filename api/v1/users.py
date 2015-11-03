@@ -27,7 +27,7 @@ def create_user():
     return jsonify({'username': user.username})
 
 
-@api.before_request
+# @api.before_request
 @api.route('/login/', methods=['POST'])
 def login():
 
