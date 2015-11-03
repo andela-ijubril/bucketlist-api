@@ -29,13 +29,6 @@ def adduser(username):
     print('User {0} was registered successfully.'.format(username))
 
 
-# @manager.command
-# def test():
-#     from subprocess import call
-#     call(['nosetests', '-v',
-#           '--with-coverage', '--cover-package=api', '--cover-branches',
-#           '--cover-erase', '--cover-html', '--cover-html-dir=cover'])
-
 
 @manager.command
 def test():

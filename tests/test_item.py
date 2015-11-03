@@ -21,8 +21,8 @@ class TestAPI(unittest.TestCase):
         user = User(
             username="jubril",
             email="jubril@isere.com",
-            password_hash="chiditheboss"
         )
+        user.hash_password("chiditheboss")
         db.session.add(user)
         db.session.commit()
         g.user = user
@@ -46,6 +46,7 @@ class TestAPI(unittest.TestCase):
 
         item.save()
         self.client = self.app.test_client()
+
 
 
 
@@ -88,6 +89,16 @@ class TestAPI(unittest.TestCase):
             'Content-Type': 'application/json'
         }
 
+    def get_user_token(self):
+        # calls the login function and returns the token generated
+        response = self.client.post(
+            url_for('api.login'),
+            headers=self.get_api_headers('jubril', 'chiditheboss'),
+            data=json.dumps({'username': 'jubril', 'password': 'chiditheboss'}))
+        token = json.loads(response.data)['token']
+        # print "I am the ", token
+        return token
+
     def test_create_bucketlist_item(self):
 
         response = self.client.post(
@@ -102,35 +113,21 @@ class TestAPI(unittest.TestCase):
         self.assertTrue(response.status_code == 200)
 
     def test_update_bucket_item(self):
-        token = self.get_token()
+        token = self.get_user_token()
+        # print token
         response = self.client.put(
-            url_for('api_1.bucketitem',
-                    bucketlist_id=1, bucketitem_id=1),
-            headers=self.get_api_headers(token, 'password'),
-            data=json.dumps({'name': 'I just changed this bucketlist'}))
+            url_for('api.bucket_item',
+                    bucketlist_id=1, item_id=1),
+            headers=self.get_api_headers(token, 'chiditheboss'),
+            data=json.dumps({'name': 'I just changed this bucketlist', 'done': True}))
         self.assertTrue(response.status_code == 200)
-
-
-        response = self.client.put(
-            url_for('api.bucket_item', bucketlist_id=1, item_id=1),
-            headers=self.get_api_headers('jubril', 'chiditheboss'),
-            data=json.dumps({
-                'name': 'My first Bucketlist Item',
-                'done': True
-            })
-        )
-
-        response_data = json.loads(response.data)
-        bucketlist_item = response_data.get('bucketlist_item')
-
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.status_code == 200)
-        self.assertEqual(bucketlist_item.get('done'), False)
+        # self.assertEqual(bucket_item.get('done'), True)
 
     def test_delete_bucket_item(self):
+        token = self.get_user_token()
         response = self.client.delete(
             url_for('api.bucket_item', bucketlist_id=1, item_id=1),
-            headers=self.get_api_headers('jubril', 'chiditheboss'),
+            headers=self.get_api_headers(token, 'chiditheboss'),
         )
 
         self.assertTrue(response.status_code == 200)

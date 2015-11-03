@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from .models import db
 from .auth import auth
-from .decorators import json, etag
+from .decorators import json
 from .errors import not_found, not_allowed
 from config import config
 
