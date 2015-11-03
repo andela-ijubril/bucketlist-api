@@ -11,7 +11,6 @@ class TestAPI(unittest.TestCase):
 
     def setUp(self):
 
-
         self.app = create_app('testing')
         self.app_context = self.app.app_context()
         self.app_context.push()
@@ -21,7 +20,7 @@ class TestAPI(unittest.TestCase):
         user = User(
             username="jubril",
             email="jubril@somedomain.com",
-            password="chiditheboss"
+            password_hash="chiditheboss"
         )
         db.session.add(user)
         db.session.commit()
@@ -42,5 +41,40 @@ class TestAPI(unittest.TestCase):
             'Content-Type': 'application/json'
         }
 
-    def test_users_can_register(self):
+    def test_user_can_register_with_username(self):
+        """ Tests user registration specifying username.
+            POST '/auth/register'
+        """
+        response = self.client.post(
+            url_for('api.create_user'),
+            headers=self.get_api_headers('jubril', 'chiditheboss'),
+            data=json.dumps({
+                'username': 'Lagbaja',
+                'email':'lagbaja@somedomain.com',
+                'password': 'nothing',
+            })
+        )
+        print "I am ", response.status_code
+        self.assertTrue(response.status_code == 200)
+        # response_data = json.loads(response.data)
+        # self.assertEqual(response.status_code, 201)
+        # self.assertEqual(response_data.get('username'), "Lagbaja")
+        # self.assertIn( url_for('login'), response.data)
 
+    def test_user_can_login(self):
+        """
+        Test user can login
+        """
+        response = self.client.post(
+            url_for('api.login'),
+            headers=self.get_api_headers('jubril', 'chiditheboss'),
+            data=json.dumps({
+                'username': 'jubril',
+                'password': 'chiditheboss'
+            })
+        )
+        print "I am ", response.status_code
+        self.assertTrue(response.status_code == 200)
+
+if __name__ == '__main__':
+    unittest.main()
