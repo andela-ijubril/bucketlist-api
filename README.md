@@ -13,20 +13,46 @@ To install and run this application, you need to have python installed on your m
 Installation
 ------------
 
-To install run virtualenv (name_of_your_virtual_environment)
-Activate the virtual environment
-clone the repo
-cd bucketlist-api
-pip install -r requirements.txt
+The commands below install the application and its dependencies:
+
+    $ git clone https://github.com/andela-ijubril/bucketlist-api.git
+    $ cd bucketlist-api    
+    $ source venv/bin/activate
+    (venv) pip install -r requirements.txt
 
 Unit test
----------
-To ensure that your installation was successful run python manage.py test
+=========
+-----------
+
+To ensure that your installation was successful run python manage.py test:
+
+(venv) $ python manage.py test
 
 Running the app
 ---------------
 
-python manage.py db init
-python manage.py db migrate
-python manage.py db upgrade
+    $python manage.py db init
+    $python manage.py db migrate
+    $python manage.py db upgrade
+    $python manage.py runserver
 
+
+Endpoints
+------------
+
+        
+    -----------------------------------------------------------------------
+    Endpoints                               Functionality
+    ------------------------------------------------------------------------
+    POST /auth/register                       Registers a user 
+    POST /auth/login                          return a token to authenticated user 
+    POST /bucketlists/                        create a new bucketlist 
+    GET /bucketlists/                         List all the created bucket lists       
+    GET /bucketlists/<id>                     Get single bucket list       
+    PUT /bucketlists/<id>                     Update this bucket list   
+    DELETE /bucketlists/<id>                  Delete this single bucket list   
+    POST /bucketlists/<id>/items/             Create a new item in bucket list
+    PUT /bucketlists/<id>/items/<item_id>     Update a bucket list item
+    DELETE /bucketlists/<id>/items/<item_id>  Delete an item in a bucket list    
+    ------------------------------------------------------------------------
+   
