@@ -1,6 +1,5 @@
 [![Coverage Status](https://coveralls.io/repos/andela-ijubril/bucketlist-api/badge.svg?branch=master&service=github)](https://coveralls.io/github/andela-ijubril/bucketlist-api?branch=master)
 [![Build Status](https://travis-ci.org/andela-ijubril/bucketlist-api.svg?branch=master)](https://travis-ci.org/andela-ijubril/bucketlist-api)
-[![Requirements Status](https://requires.io/github/andela-ijubril/bucketlist-api/requirements.svg?branch=master)](https://requires.io/github/andela-ijubril/bucketlist-api/requirements/?branch=master)
 Bucketlist Api
 ===============
 
