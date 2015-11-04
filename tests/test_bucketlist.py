@@ -81,3 +81,14 @@ class TestAPI(unittest.TestCase):
         print "I am the delete guy ", response.status_code
 
         self.assertTrue(response.status_code == 200)
+
+    def test_bucketlist_query_search(self):
+        token = self.get_user_token()
+        response = self.client.get(
+            url_for('api.get_bucketlists', q="Awesome"),
+            headers=self.get_api_headers(token, 'chiditheboss'),
+        )
+        print "I am the search guy ", response.status_code
+        self.assertTrue(response.status_code == 200)
+
+

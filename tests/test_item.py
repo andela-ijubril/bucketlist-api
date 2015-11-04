@@ -29,21 +29,6 @@ class TestAPI(unittest.TestCase):
 
         self.client = self.app.test_client()
 
-
-        test_user = User(username="padi", email="padi@gmail.com", password_hash="padimi")
-
-
-
-        test_user.save()
-        bucketlist = Bucketlist(name="padi Bucketlist", created_by = g.user.id)
-        bucketlist.save()
-        item = Item(
-            name="Item of the padi bucketlist", bucketlist_id=bucketlist.id
-        )
-
-        item.save()
-        self.client = self.app.test_client()
-
     def tearDown(self):
         db.session.remove()
         db.drop_all()
@@ -65,7 +50,6 @@ class TestAPI(unittest.TestCase):
             headers=self.get_api_headers('jubril', 'chiditheboss'),
             data=json.dumps({'username': 'jubril', 'password': 'chiditheboss'}))
         token = json.loads(response.data)['token']
-        # print "I am the ", token
         return token
 
     def test_create_bucketlist_item(self):
@@ -89,7 +73,6 @@ class TestAPI(unittest.TestCase):
             headers=self.get_api_headers(token, 'chiditheboss'),
             data=json.dumps({'name': 'I just changed this bucketlist', 'done': True}))
         self.assertTrue(response.status_code == 200)
-        # self.assertEqual(bucket_item.get('done'), True)
 
     def test_delete_bucket_item(self):
         token = self.get_user_token()
@@ -99,3 +82,4 @@ class TestAPI(unittest.TestCase):
         )
 
         self.assertTrue(response.status_code == 200)
+

@@ -5,11 +5,6 @@ class ValidationError(ValueError):
     pass
 
 
-def not_modified():
-    response = {'status': 304, 'error': 'not modified'}
-    return response
-
-
 def bad_request(message):
     response = {'status': 400, 'error': 'bad request',
                 'message': message}
@@ -29,9 +24,4 @@ def not_found(message):
 
 def not_allowed():
     response = {'status': 405, 'error': 'method not allowed'}
-    return response
-
-
-def precondition_failed():
-    response = {'status': 412, 'error': 'precondition failed'}
     return response

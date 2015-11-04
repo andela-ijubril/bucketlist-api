@@ -10,15 +10,13 @@ from .errors import ValidationError
 db = SQLAlchemy()
 
 
-
 class Base(db.Model):
     __abstract__ = True
-    # date_created = db.Column(db.DateTime, default=datetime.utcnow)
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     date_modified = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def save(self, ):
+    def save(self):
         db.session.add(self)
         db.session.commit()
 
@@ -30,9 +28,6 @@ class Bucketlist(Base):
     name = db.Column(db.String(100), index=True)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     items = db.relationship("Item", backref='bucketlists', lazy='dynamic')
-
-    def get_url(self):
-        return url_for('api.create_bucketlist', created_by=self.created_by, _external=True)
 
     def to_json(self, with_items=False):
         """ returns a json-style dictionary representation of the bucketlist
@@ -70,7 +65,6 @@ class Bucketlist(Base):
         db.session.delete(self)
         db.session.commit()
 
-
 class Item(Base):
     __tablename__ = 'items'
 
@@ -94,7 +88,6 @@ class Item(Base):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
-
 
 class User(Base):
 
