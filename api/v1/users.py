@@ -23,10 +23,9 @@ def create_user():
     user.hash_password(password)
     user.save()
 
-    return jsonify({'username': user.username})
+    return {'status': (user.username + ' has successfully registered')}
 
 
-# @api.before_request
 @api.route('/login/', methods=['POST'])
 def login():
 
@@ -40,13 +39,4 @@ def login():
         status = "Invalid username or password"
         token = None
 
-    return jsonify({'status': status,
-                    'token': token})
-
-
-@api.route('/users/')
-def get_all_users():
-    users = User.query.all()
-    return jsonify({
-        'users': users
-    })
+    return {'status': status, 'token': token}

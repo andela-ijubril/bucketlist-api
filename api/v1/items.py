@@ -18,15 +18,14 @@ def create_item(bucketlist_id):
     item = Item(name=name, bucketlist_id=bucketlist_id)
     item.save()
 
-    return jsonify({'message': "Your bucketlist Items was created successfully"})
+    return {'message': "Your bucketlist Items was created successfully",
+            "Item": item.to_json()}
 
 
 @api.route('/bucketlist/<int:bucketlist_id>/items/<int:item_id>', methods=['PUT', 'DELETE'])
 @auth.login_required
 def bucket_item(bucketlist_id, item_id):
     bucketlist = Bucketlist.query.filter_by(created_by=g.user.id).filter_by(id=bucketlist_id).first()
-
-    # print jsonify({'bucketlist': bucketlist.to_json()})
 
     if not bucketlist:
         return not_found("Bucketlist not found")
@@ -45,4 +44,4 @@ def bucket_item(bucketlist_id, item_id):
         item.delete()
         return jsonify({'message': 'Item successfully deleted'})
 
-    return jsonify({"Item": item.to_json()})
+    return {"Item": item.to_json()}

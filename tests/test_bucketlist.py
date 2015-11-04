@@ -8,9 +8,7 @@ from api import create_app, db
 
 
 class TestAPI(unittest.TestCase):
-
     def setUp(self):
-
         self.app = create_app('testing')
         self.app_context = self.app.app_context()
         self.app_context.push()
@@ -26,6 +24,9 @@ class TestAPI(unittest.TestCase):
         db.session.add(user)
         db.session.commit()
         g.user = user
+
+        bucketlist = Bucketlist(name="Awesome Bucketlist", created_by=g.user.id)
+        bucketlist.save()
 
         self.client = self.app.test_client()
 
@@ -44,7 +45,6 @@ class TestAPI(unittest.TestCase):
         }
 
     def get_user_token(self):
-        # calls the login function and returns the token generated
         response = self.client.post(
             url_for('api.login'),
             headers=self.get_api_headers('jubril', 'chiditheboss'),
@@ -53,9 +53,7 @@ class TestAPI(unittest.TestCase):
         # print "I am the ", token
         return token
 
-
     def test_create_bucketlist(self):
-
         response = self.client.post(
             url_for('api.create_bucketlist'),
             headers=self.get_api_headers('jubril', 'chiditheboss'),
@@ -68,13 +66,11 @@ class TestAPI(unittest.TestCase):
 
     def test_update_bucketlist(self):
         token = self.get_user_token()
-        # print token
         response = self.client.put(
             url_for('api.get_bucketlist', id=1),
             headers=self.get_api_headers(token, 'chiditheboss'),
             data=json.dumps({'name': 'I just changed this bucketlist'}))
         self.assertTrue(response.status_code == 200)
-        # self.assertEqual(bucket_item.get('done'), True)
 
     def test_delete_bucket_list(self):
         token = self.get_user_token()
@@ -82,5 +78,6 @@ class TestAPI(unittest.TestCase):
             url_for('api.get_bucketlist', id=1),
             headers=self.get_api_headers(token, 'chiditheboss'),
         )
+        print "I am the delete guy ", response.status_code
 
         self.assertTrue(response.status_code == 200)

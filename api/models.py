@@ -4,10 +4,11 @@ from werkzeug.exceptions import NotFound
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import url_for, current_app
 from flask_sqlalchemy import SQLAlchemy
-# from .helpers import args_from_url
+
 from .errors import ValidationError
 
 db = SQLAlchemy()
+
 
 
 class Base(db.Model):
@@ -45,37 +46,29 @@ class Bucketlist(Base):
             'date_modified': self.date_modified,
             'created_by': {
                 'username': str(self.created_by)
-                # 'url': url_for('api.get_user', id=self.created_by, _external=True),
+
             }
-            # 'url': url_for('api.get_bucketlist', id=self.id, _external=True),
+        }
+        return json_bucketlist
+
+    def export_data(self):
+        """ returns a json-style dictionary representation of the bucketlist
+            and it's associated items.
+        """
+        json_bucketlist = {
+            'id': self.id,
+            'name': self.name,
+            'item_count': self.items.to_json(),
+            # 'item_count': self.items.count(),
+            'date_created': self.date_created,
+            'date_modified': self.date_modified,
+            'created_by': User.query.get(self.created_by).username
         }
         return json_bucketlist
 
     def delete(self):
         db.session.delete(self)
         db.session.commit()
-#
-#     def export_data(self):
-#         return {'self_url': self.get_url(),
-#                 'student_url': url_for('api.get_student', id=self.student_id,
-#                                        _external=True),
-#                 'class_url': url_for('api.get_class', id=self.class_id,
-#                                      _external=True),
-#                 'timestamp': self.timestamp.isoformat() + 'Z'}
-#
-#     def import_data(self, data):
-#         try:
-#             student_id = args_from_url(data['student_url'],
-#                                        'api.get_student')['id']
-#             self.student = Student.query.get_or_404(student_id)
-#         except (KeyError, NotFound):
-#             raise ValidationError('Invalid student URL')
-#         try:
-#             class_id = args_from_url(data['class_url'], 'api.get_class')['id']
-#             self.class_ = Class.query.get_or_404(class_id)
-#         except (KeyError, NotFound):
-#             raise ValidationError('Invalid class URL')
-#         return self
 
 
 class Item(Base):
@@ -85,39 +78,22 @@ class Item(Base):
     done = db.Column(db.Boolean(), default=False)
     bucketlist_id = db.Column(db.Integer, db.ForeignKey('bucketlists.id'))
 
-    def to_json(self, with_items=False):
+    def to_json(self):
         """ returns a json-style dictionary representation of the bucketlist
             and it's associated items.
         """
         json_bucketlist = {
             'id': self.id,
             'name': self.name,
-            'item_count': self.items.count(),
             'date_created': self.date_created,
             'date_modified': self.date_modified,
-            'created_by': {
-                'username': str(self.created_by)
-                # 'url': url_for('api.get_user', id=self.created_by, _external=True),
-            }
-            # 'url': url_for('api.get_bucketlist', id=self.id, _external=True),
+            'url': url_for('api.get_bucketlist', id=self.id, _external=True),
         }
         return json_bucketlist
-#
-#     def get_url(self):
-#         return url_for('api.get_student', id=self.id, _external=True)
-#
-#     def export_data(self):
-#         return {'self_url': self.get_url(),
-#                 'name': self.name,
-#                 'registrations_url': url_for('api.get_student_registrations',
-#                                              id=self.id, _external=True)}
-#
-#     def import_data(self, data):
-#         try:
-#             self.name = data['name']
-#         except KeyError as e:
-#             raise ValidationError('Invalid student: missing ' + e.args[0])
-#         return self
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
 
 class User(Base):

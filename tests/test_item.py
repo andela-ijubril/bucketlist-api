@@ -83,7 +83,6 @@ class TestAPI(unittest.TestCase):
 
     def test_update_bucket_item(self):
         token = self.get_user_token()
-        # print token
         response = self.client.put(
             url_for('api.bucket_item',
                     bucketlist_id=1, item_id=1),
