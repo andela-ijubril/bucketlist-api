@@ -11,6 +11,9 @@ db = SQLAlchemy()
 
 
 class Base(db.Model):
+    """
+    The base model that every other models in our application inherits from
+    """
     __abstract__ = True
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
@@ -22,6 +25,9 @@ class Base(db.Model):
 
 
 class Bucketlist(Base):
+    """
+    Our Bucketlist model that corresponds to bucketlists table
+    """
 
     __tablename__ = 'bucketlists'
 
@@ -30,8 +36,7 @@ class Bucketlist(Base):
     items = db.relationship("Item", backref='bucketlists', lazy='dynamic')
 
     def to_json(self, with_items=False):
-        """ returns a json-style dictionary representation of the bucketlist
-            and it's associated items.
+        """ put in json format
         """
         json_bucketlist = {
             'id': self.id,
@@ -46,26 +51,15 @@ class Bucketlist(Base):
         }
         return json_bucketlist
 
-    def export_data(self):
-        """ returns a json-style dictionary representation of the bucketlist
-            and it's associated items.
-        """
-        json_bucketlist = {
-            'id': self.id,
-            'name': self.name,
-            'item_count': self.items.to_json(),
-            # 'item_count': self.items.count(),
-            'date_created': self.date_created,
-            'date_modified': self.date_modified,
-            'created_by': User.query.get(self.created_by).username
-        }
-        return json_bucketlist
-
     def delete(self):
         db.session.delete(self)
         db.session.commit()
 
 class Item(Base):
+    """
+    Our Item model that corresponds to items table
+    """
+
     __tablename__ = 'items'
 
     name = db.Column(db.String(100), index=True)
@@ -73,8 +67,7 @@ class Item(Base):
     bucketlist_id = db.Column(db.Integer, db.ForeignKey('bucketlists.id'))
 
     def to_json(self):
-        """ returns a json-style dictionary representation of the bucketlist
-            and it's associated items.
+        """ put in json format
         """
         json_bucketlist = {
             'id': self.id,
@@ -90,6 +83,9 @@ class Item(Base):
         db.session.commit()
 
 class User(Base):
+    """
+    Our User model that corresponds to users table
+    """
 
     __tablename__ = 'users'
 
@@ -99,20 +95,29 @@ class User(Base):
     bucketlists = db.relationship("Bucketlist")
 
     def hash_password(self, password):
+        """
+        generate the hash of the password of the user
+        :param password:
+        """
         self.password_hash = generate_password_hash(password)
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
     def generate_auth_token(self, expires_in=3600):
+        """
+        Generate the authenticaton token and it is valid for 3600 seconds
+        :param expires_in:
+        """
         s = Serializer(current_app.config['SECRET_KEY'], expires_in=expires_in)
         return s.dumps({'id': self.id}).decode('utf-8')
 
-    def export_data(self):
-        return {'name': self.name}
-
     @staticmethod
     def verify_auth_token(token):
+        """
+        Verify the token to be use for the current request
+        :param token:
+        """
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
             data = s.loads(token)

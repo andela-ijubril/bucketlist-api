@@ -35,11 +35,13 @@ def bucket_item(bucketlist_id, item_id):
     if not item:
         return not_found("Item not found")
 
+    # Update the Item
     if request.method == 'PUT':
         item.date_modified = datetime.utcnow()
         item.name = request.json.get('name')
         item.save()
 
+    # Delete the item
     if request.method == 'DELETE':
         item.delete()
         return jsonify({'message': 'Item successfully deleted'})

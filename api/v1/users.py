@@ -7,7 +7,10 @@ from ..auth import verify_password
 
 @api.route('/register/', methods=['POST'])
 def create_user():
-
+    """
+    Creates a user with email, username and password
+    :return: A success message if user is successfully created
+    """
     email = request.json.get('email')
     username = request.json.get('username')
     password = request.json.get('password')
@@ -28,7 +31,10 @@ def create_user():
 
 @api.route('/login/', methods=['POST'])
 def login():
-
+    """
+    Authenticate a user and return the token to be used for subsequent requests
+    :return: User token
+    """
     username = request.json.get('username')
     password = request.json.get('password')
 

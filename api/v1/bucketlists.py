@@ -13,6 +13,9 @@ from flask.ext.sqlalchemy import SQLAlchemy
 @api.route('/bucketlist/', methods=['POST'])
 @auth.login_required
 def create_bucketlist():
+    """
+    Create a new bucketlist, this is a POST request
+    """
     name = request.json.get('name')
 
     if name is None:
@@ -28,6 +31,9 @@ def create_bucketlist():
 @api.route('/bucketlists/')
 @auth.login_required
 def get_bucketlists():
+    """
+    Get Bucketlists for the current logged in user, and set pagination and limit
+    """
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('limit', current_app.config['RESULTS_PER_PAGE'], type=int)
 
@@ -63,16 +69,24 @@ def get_bucketlists():
 @api.route('/bucketlists/<int:id>/', methods=['GET', 'PUT', 'DELETE'])
 @auth.login_required
 def get_bucketlist(id):
+    """
+    Get just one bucket list of the current authenticated user
+    :param id:
+    :return: the bucketlist with the id passed in
+    """
     bucketlist = Bucketlist.query.filter_by(created_by=g.user.id).filter_by(id=id).first()
 
+    # return not found if no bucketlist is found for the user
     if not bucketlist:
         return not_found("Bucketlist not found")
 
+    # Handle update of the bucketlist returned
     if request.method == 'PUT':
         bucketlist.date_modified = datetime.utcnow()
         bucketlist.name = request.json.get('name')
         bucketlist.save()
 
+    # Handle Delete of the bucketlist returned
     if request.method == 'DELETE':
         bucketlist.delete()
         return {'message': 'Item successfully deleted'}
