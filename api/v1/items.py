@@ -22,7 +22,7 @@ def create_item(bucketlist_id):
             "Item": item.to_json()}
 
 
-@api.route('/bucketlist/<int:bucketlist_id>/items/<int:item_id>', methods=['PUT', 'DELETE'])
+@api.route('/bucketlists/<int:bucketlist_id>/items/<int:item_id>/', methods=['PUT', 'DELETE'])
 @auth.login_required
 def bucket_item(bucketlist_id, item_id):
     bucketlist = Bucketlist.query.filter_by(created_by=g.user.id).filter_by(id=bucketlist_id).first()

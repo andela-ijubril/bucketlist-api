@@ -74,13 +74,14 @@ class Item(Base):
             'name': self.name,
             'date_created': self.date_created,
             'date_modified': self.date_modified,
-            'url': url_for('api.get_bucketlist', id=self.id, _external=True),
+            'url': url_for('api.get_bucketlist', id=self.bucketlist_id, _external=True),
         }
         return json_bucketlist
 
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
 
 class User(Base):
     """

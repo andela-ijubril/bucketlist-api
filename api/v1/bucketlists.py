@@ -89,6 +89,6 @@ def get_bucketlist(id):
     # Handle Delete of the bucketlist returned
     if request.method == 'DELETE':
         bucketlist.delete()
-        return {'message': 'Item successfully deleted'}
+        return {'message': 'Bucketlist successfully deleted'}
 
     return {"Bucketlist": bucketlist.to_json()}
