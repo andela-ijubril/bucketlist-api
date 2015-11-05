@@ -63,7 +63,7 @@ Endpoints
 POST http://localhost:5000/api/v1/auth/register/
 
 Registers a user 
-```    
+---------------------------------------------------------------------------------
     
     PARAMETERS
     
@@ -75,12 +75,13 @@ Registers a user
     {
       "status": "(Username) has successfully registered"
     }
-    
+------------------------------------------------------------------------------------
     
 POST http://localhost:5000/api/v1/auth/login/
 
 Returns a token for the authenticated user
-    
+
+-----------------------------------------------------------------------------------
     PARAMETERS
     
     username (compulsory)
@@ -92,13 +93,15 @@ Returns a token for the authenticated user
       "status": "token generated successfully",
       "token": "(token returned)"
     }
+------------------------------------------------------------------------------------
     
 POST http://localhost:5000/api/v1/bucketlist/
 
 create a new bucketlist for the current authenticated user
 
 you must pass a token for this request
-    
+
+------------------------------------------------------------------------------------
     PARAMETERS
     name    (compulsory)
     
@@ -116,7 +119,7 @@ you must pass a token for this request
         "id": (the id of the bucketlist)
       }
     }
-    
+--------------------------------------------------------------------------------------  
     
 GET http://localhost:5000/api/v1/bucketlists/
 
@@ -124,7 +127,8 @@ get the bucketlists of the current authenticated user
 
 you must pass a token for this request
     
-    
+
+----------------------------------------------------------------------------------------
     RESPONSE
     {
       "total": 1,
@@ -149,14 +153,16 @@ you must pass a token for this request
     http://127.0.0.1:5000/api/v1/bucketlists/?q=something (to search by name)
     http://127.0.0.1:5000/api/v1/bucketlists/?page=2 (to move to the next page for the current bucketlist returned it is 1 by default)
     http://127.0.0.1:5000/api/v1/bucketlists/?limit=10 (to limit the reponse to 10 bucketlist)
-    
+
+-----------------------------------------------------------------------------------------------------------    
     
 GET http://localhost:5000/api/v1/bucketlists/26/
 
 get a single bucketlist that correspond to the id passed for the authenticated user
 
 you must pass a token for this request
-    
+
+-------------------------------------------------------------------------------------------------------    
     RESPONSE
     {
       "Bucketlist": {
@@ -176,7 +182,7 @@ PUT http://localhost:5000/api/v1/bucketlists/26/
 Update a single bucketlist that correspond to the id passed for the authenticated user
 
 you must pass a token for this request
-    
+----------------------------------------------------------------------------------------------------------    
     PARAMETERS
     name    (compulsory)
     
@@ -200,7 +206,8 @@ DELETE http://localhost:5000/api/v1/bucketlists/26/
 Deletes a single bucketlist that correspond to the id passed for the authenticated user
 
 you must pass a token for this request
-    
+
+----------------------------------------------------------------------------------------------------------    
     RESPONSE
     {
       "message": "Bucketlist successfully deleted"
@@ -212,7 +219,8 @@ POST http://localhost:5000/api/v1/bucketlists/(id)/items/
 create a new item for a particular bucketlist if the user is the owner of the bucketlist for the current authenticated user
 
 you must pass a token for this request
-    
+
+----------------------------------------------------------------------------------------------------------    
     PARAMETERS
     name    (compulsory)
     
@@ -228,13 +236,14 @@ you must pass a token for this request
       "message": "Your bucketlist Items was created successfully"
     }
     
-    
+----------------------------------------------------------------------------------------------------------    
 PUT http://localhost:5000/api/v1/bucketlists/(id)/items/(item_id)/
 
 Update a single item in a bucketlist for the authenticated user
 
 you must pass a token for this request
-    
+
+----------------------------------------------------------------------------------------------------------    
     PARAMETERS
     name    (compulsory)
     
@@ -249,13 +258,15 @@ you must pass a token for this request
         "name": "first awesome item to be edited in the list"
       }
     }
-    
+----------------------------------------------------------------------------------------------------------    
     
 DELETE http://localhost:5000/api/v1/bucketlists/(id)/items/(item_id)/
 
 Delete a single item in a bucketlist for the authenticated user
 
 you must pass a token for this request
+
+----------------------------------------------------------------------------------------------------------
     
     RESPONSE
     {
@@ -263,4 +274,4 @@ you must pass a token for this request
     }
 
 
-```
+----------------------------------------------------------------------------------------------------------
