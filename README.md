@@ -78,6 +78,7 @@ Registers a user
 ```     
     
 POST http://localhost:5000/api/v1/auth/login/
+
 Returns a token for the authenticated user
     
     PARAMETERS
@@ -93,7 +94,9 @@ Returns a token for the authenticated user
     }
     
 POST http://localhost:5000/api/v1/bucketlist/
+
 create a new bucketlist for the current authenticated user
+
 you must pass a token for this request
     
     PARAMETERS
@@ -116,7 +119,9 @@ you must pass a token for this request
     
     
 GET http://localhost:5000/api/v1/bucketlists/
+
 get the bucketlists of the current authenticated user
+
 you must pass a token for this request
     
     
@@ -149,6 +154,7 @@ you must pass a token for this request
 GET http://localhost:5000/api/v1/bucketlists/26/
 
 get a single bucketlist that correspond to the id passed for the authenticated user
+
 you must pass a token for this request
     
     RESPONSE
@@ -168,6 +174,7 @@ you must pass a token for this request
 PUT http://localhost:5000/api/v1/bucketlists/26/
 
 Update a single bucketlist that correspond to the id passed for the authenticated user
+
 you must pass a token for this request
     
     PARAMETERS
@@ -191,6 +198,7 @@ you must pass a token for this request
 DELETE http://localhost:5000/api/v1/bucketlists/26/
 
 Deletes a single bucketlist that correspond to the id passed for the authenticated user
+
 you must pass a token for this request
     
     RESPONSE
@@ -200,7 +208,9 @@ you must pass a token for this request
     
     
 POST http://localhost:5000/api/v1/bucketlists/<id>/items/
+
 create a new item for a particular bucketlist if the user is the owner of the bucketlist for the current authenticated user
+
 you must pass a token for this request
     
     PARAMETERS
@@ -220,7 +230,9 @@ you must pass a token for this request
     
     
 PUT http://localhost:5000/api/v1/bucketlists/<id>/items/<item_id>/
+
 Update a single item in a bucketlist for the authenticated user
+
 you must pass a token for this request
     
     PARAMETERS
@@ -239,8 +251,10 @@ you must pass a token for this request
     }
     
     
-DELETE http://localhost:5000/api/v1/bucketlists/<id>/items/<item_id>/
+DELETE http://localhost:5000/api/v1/bucketlists/id/items/item_id/
+
 Delete a single item in a bucketlist for the authenticated user
+
 you must pass a token for this request
     
     RESPONSE
