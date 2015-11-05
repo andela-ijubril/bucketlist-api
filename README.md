@@ -75,7 +75,7 @@ Registers a user
     {
       "status": "(Username) has successfully registered"
     }
-```     
+    
     
 POST http://localhost:5000/api/v1/auth/login/
 
@@ -207,7 +207,7 @@ you must pass a token for this request
     }
     
     
-POST http://localhost:5000/api/v1/bucketlists/<id>/items/
+POST http://localhost:5000/api/v1/bucketlists/(id)/items/
 
 create a new item for a particular bucketlist if the user is the owner of the bucketlist for the current authenticated user
 
@@ -229,7 +229,7 @@ you must pass a token for this request
     }
     
     
-PUT http://localhost:5000/api/v1/bucketlists/<id>/items/<item_id>/
+PUT http://localhost:5000/api/v1/bucketlists/(id)/items/(item_id)/
 
 Update a single item in a bucketlist for the authenticated user
 
@@ -251,7 +251,7 @@ you must pass a token for this request
     }
     
     
-DELETE http://localhost:5000/api/v1/bucketlists/id/items/item_id/
+DELETE http://localhost:5000/api/v1/bucketlists/(id)/items/(item_id)/
 
 Delete a single item in a bucketlist for the authenticated user
 
