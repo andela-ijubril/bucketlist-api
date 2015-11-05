@@ -5,7 +5,7 @@ from . import api
 from ..auth import verify_password
 
 
-@api.route('/register/', methods=['POST'])
+@api.route('/auth/register/', methods=['POST'])
 def create_user():
     """
     Creates a user with email, username and password
@@ -29,7 +29,7 @@ def create_user():
     return {'status': (user.username + ' has successfully registered')}
 
 
-@api.route('/login/', methods=['POST'])
+@api.route('/auth/login/', methods=['POST'])
 def login():
     """
     Authenticate a user and return the token to be used for subsequent requests

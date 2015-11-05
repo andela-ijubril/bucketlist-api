@@ -5,13 +5,11 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-# SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'api.sqlite')
-# USE_TOKEN_AUTH = True
-
-
 class Config:
+    """
+    Configuration to be shared across all environments
+    """
     SECRET_KEY = 'secret'
-    # SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_RECORD_QUERIES = True
     FLASKY_SLOW_DB_QUERY_TIME=0.5
@@ -24,12 +22,18 @@ class Config:
 
 
 class DevelopmentConfig(Config):
+    """
+    Configuration for development
+    """
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
 
 
 class TestingConfig(Config):
+    """
+    Configuration for testing
+    """
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')

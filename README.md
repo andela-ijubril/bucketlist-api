@@ -55,3 +55,12 @@ Endpoints
     DELETE /bucketlists/<id>/items/<item_id>  Delete an item in a bucket list    
     ------------------------------------------------------------------------
    
+
+
+###Request format
+```
+
+http://localhost:5000/api/v1/(Endpoints) e.g http://localhost:5000/api/v1/auth/register
+
+
+```

@@ -57,13 +57,13 @@ def get_bucketlists():
     next_url = url_for('api.get_bucketlists', limit=per_page, page=page + 1, _external=True) \
         if pagination.has_next else None
 
-    return {
+    return ({
         "bucketlists": [bucketlist.to_json() for bucketlist in bucketlists],
         "current_page": page,
         "total": pagination.total,
         "next_url": next_url,
         "prev_url": prev_url,
-    }, 200
+    })
 
 
 @api.route('/bucketlists/<int:id>/', methods=['GET', 'PUT', 'DELETE'])
