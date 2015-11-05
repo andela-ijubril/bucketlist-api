@@ -57,60 +57,67 @@ Endpoints
    
 
 
-###Endpoints description
+##Endpoints description
 
-##Authentication
-    
-POST http://localhost:5000/api/v1/auth/register/
+###Authentication
 
-Registers a user 
----------------------------------------------------------------------------------
-    
-    PARAMETERS
-    
-    username (compulsory)
-    email (compulsory)
-    password (compulsory)
-    
-    RESPONSE
-    {
+**Register a user. POST: api/v1/auth/register/**
+
+
+Request body
+```
+	{
+	"username": "username",
+	"email": "username@email.com",
+	"password": "password"
+
+	}
+```
+Response body
+```
+	{
       "status": "(Username) has successfully registered"
     }
-------------------------------------------------------------------------------------
+```
     
-POST http://localhost:5000/api/v1/auth/login/
 
-Returns a token for the authenticated user
+**Returns a token for the authenticated user. POST: /api/v1/auth/login/**
 
------------------------------------------------------------------------------------
-    PARAMETERS
-    
-    username (compulsory)
-    password (compulsory)
-    
-    RESPONSE
-    
-    {
+Request body
+```
+	{
+	"username": "username",
+	"password": "password"
+
+	}
+```
+Response body
+```
+	{
       "status": "token generated successfully",
       "token": "(token returned)"
     }
-------------------------------------------------------------------------------------
+```
     
-POST http://localhost:5000/api/v1/bucketlist/
+###Bucketlist    
 
-create a new bucketlist for the current authenticated user
+**Create a new bucketlist. POST: /api/v1/bucketlist/**
+
 
 you must pass a token for this request
 
-------------------------------------------------------------------------------------
-    PARAMETERS
-    name    (compulsory)
-    
-    RESPONSE
-    {
+Request body
+```
+	{
+	"name": "first bucketlist"	
+	}
+```
+Response body
+```
+	 {
       "message": "Your bucketlist was created successfully",
       "Bucketlist": {
-        "name": "(whatever name you gave to your bucketlist)",
+        "name": "first bucketlist",
         "date_modified": "(date and time created in this case)",
         "created_by": {
           "username": "(bucket list creator id)"
@@ -120,18 +127,17 @@ you must pass a token for this request
         "id": (the id of the bucketlist)
       }
     }
---------------------------------------------------------------------------------------  
+```
+ 
     
-GET http://localhost:5000/api/v1/bucketlists/
+**Get the bucketlists of the current authenticated user. GET: api/v1/bucketlists/**
 
-get the bucketlists of the current authenticated user
 
 you must pass a token for this request
-    
 
-----------------------------------------------------------------------------------------
-    RESPONSE
-    {
+Response body
+```  
+	{
       "total": 1,
       "next_url": null,
       "bucketlists": [
@@ -149,23 +155,24 @@ you must pass a token for this request
       "current_page": 1,
       "prev_url": null
     }
-    
-    you can also pass some arguments like page, limit and q in the request
-    http://127.0.0.1:5000/api/v1/bucketlists/?q=something (to search by name)
-    http://127.0.0.1:5000/api/v1/bucketlists/?page=2 (to move to the next page for the current bucketlist returned it is 1 by default)
-    http://127.0.0.1:5000/api/v1/bucketlists/?limit=10 (to limit the reponse to 10 bucketlist)
+```      
 
------------------------------------------------------------------------------------------------------------    
-    
-GET http://localhost:5000/api/v1/bucketlists/26/
+   
+you can also pass some arguments like page, limit and q in the request
+```
+    GET: /api/v1/bucketlists/?q=something (to search by name)
+    GET: http://127.0.0.1:5000/api/v1/bucketlists/?page=2 (to move to the next page for the current bucketlist returned it is 1 by default)
+    GET:http://127.0.0.1:5000/api/v1/bucketlists/?limit=10 (to limit the reponse to 10 bucketlist)
+```
 
-get a single bucketlist that correspond to the id passed for the authenticated user
+    
+**Get a single bucketlist. GET http://localhost:5000/api/v1/bucketlists/26/**
 
 you must pass a token for this request
 
--------------------------------------------------------------------------------------------------------    
-    RESPONSE
-    {
+Response body
+``` 
+{
       "Bucketlist": {
         "name": "awesome bucketlist that i want to create for the documentation",
         "date_modified": "(date it was modified or created as the case may be)",
@@ -177,17 +184,14 @@ you must pass a token for this request
         "id": 26
       }
     }
+```
     
-PUT http://localhost:5000/api/v1/bucketlists/26/
-
-Update a single bucketlist that correspond to the id passed for the authenticated user
+**Update a single bucketlist. PUT: /api/v1/bucketlists/26/**
 
 you must pass a token for this request
-----------------------------------------------------------------------------------------------------------    
-    PARAMETERS
-    name    (compulsory)
-    
-    RESPONSE
+
+Response body
+```
     {
       "Bucketlist": {
         "name": "The edited name",
@@ -200,35 +204,35 @@ you must pass a token for this request
         "id": 26
       }
     }
+```    
     
-    
-DELETE http://localhost:5000/api/v1/bucketlists/26/
-
-Deletes a single bucketlist that correspond to the id passed for the authenticated user
+**Delete a single bucketlist. DELETE: /api/v1/bucketlists/26/**
 
 you must pass a token for this request
 
-----------------------------------------------------------------------------------------------------------    
-    RESPONSE
+Response body
+```    
     {
       "message": "Bucketlist successfully deleted"
     }
+```    
     
-    
-POST http://localhost:5000/api/v1/bucketlists/(id)/items/
-
-create a new item for a particular bucketlist if the user is the owner of the bucketlist for the current authenticated user
+**Create a new item. POST: /api/v1/bucketlists/(id)/items/
 
 you must pass a token for this request
 
-----------------------------------------------------------------------------------------------------------    
-    PARAMETERS
-    name    (compulsory)
+Request body
+```
+	{
+		"name": "first item"
+	}
+```
+Response body    
     
-    RESPONSE
+``` 
     {
       "Item": {
-        "url": "http://localhost:5000/api/v1/bucketlists/<id>/",
+        "url": "http://localhost:5000/api/v1/bucketlists/(id)/",
         "date_created": "(date it was created )",
         "date_modified": "(date it was modified)",
         "id": (the id of the item),
@@ -236,21 +240,21 @@ you must pass a token for this request
       },
       "message": "Your bucketlist Items was created successfully"
     }
-    
-----------------------------------------------------------------------------------------------------------    
-PUT http://localhost:5000/api/v1/bucketlists/(id)/items/(item_id)/
+```    
 
-Update a single item in a bucketlist for the authenticated user
+**Update a single item. PUT: /api/v1/bucketlists/(id)/items/(item_id)/**
 
 you must pass a token for this request
 
-----------------------------------------------------------------------------------------------------------    
-    PARAMETERS
-    name    (compulsory)
-    
-    RESPONSE
-    
-    {
+Request body
+```
+	{
+		"name": "first item updated"
+	}
+```
+Response body
+```
+	{
       "Item": {
         "url": "http://localhost:5000/api/v1/bucketlists/26/",
         "date_created": "(date it was created )",
@@ -259,20 +263,17 @@ you must pass a token for this request
         "name": "first awesome item to be edited in the list"
       }
     }
-----------------------------------------------------------------------------------------------------------    
-    
-DELETE http://localhost:5000/api/v1/bucketlists/(id)/items/(item_id)/
+```	
 
-Delete a single item in a bucketlist for the authenticated user
+   
+**Delete a single item. DELETE: /api/v1/bucketlists/(id)/items/(item_id)/**
 
 you must pass a token for this request
 
-----------------------------------------------------------------------------------------------------------
-    
-    RESPONSE
+Response body
+```        
     {
       "message": "Item successfully deleted"
     }
+```
 
-
-----------------------------------------------------------------------------------------------------------
