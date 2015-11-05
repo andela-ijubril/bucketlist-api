@@ -27,8 +27,6 @@ class TestAPI(unittest.TestCase):
 
         self.client = self.app.test_client()
 
-
-
     def tearDown(self):
         db.session.remove()
         db.drop_all()
@@ -58,10 +56,6 @@ class TestAPI(unittest.TestCase):
         )
         print "I am ", response.status_code
         self.assertTrue(response.status_code == 200)
-        # response_data = json.loads(response.data)
-        # self.assertEqual(response.status_code, 201)
-        # self.assertEqual(response_data.get('username'), "Lagbaja")
-        # self.assertIn( url_for('login'), response.data)
 
     def test_user_can_login(self):
         """
