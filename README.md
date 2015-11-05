@@ -61,7 +61,9 @@ Endpoints
 
 ###Authentication
 
-**Register a user. POST: api/v1/auth/register/**
+**Register a user.** 
+
+POST: api/v1/auth/register/
 
 
 Request body
@@ -81,7 +83,9 @@ Response body
 ```
     
 
-**Returns a token for the authenticated user. POST: /api/v1/auth/login/**
+**Returns a token for the authenticated user.**
+
+POST: /api/v1/auth/login/
 
 Request body
 ```
@@ -101,10 +105,12 @@ Response body
     
 ###Bucketlist    
 
-**Create a new bucketlist. POST: /api/v1/bucketlist/**
+**Create a new bucketlist.**
+
+POST: /api/v1/bucketlist/
 
 
-you must pass a token for this request
+You must pass a token for this request
 
 Request body
 ```
@@ -130,10 +136,12 @@ Response body
 ```
  
     
-**Get the bucketlists of the current authenticated user. GET: api/v1/bucketlists/**
+**Get the bucketlists of the current authenticated user.**
+
+GET: api/v1/bucketlists/
 
 
-you must pass a token for this request
+You must pass a token for this request
 
 Response body
 ```  
@@ -158,17 +166,19 @@ Response body
 ```      
 
    
-you can also pass some arguments like page, limit and q in the request
+You can also pass some arguments like page, limit and q in the request
 ```
     GET: /api/v1/bucketlists/?q=something (to search by name)
-    GET: http://127.0.0.1:5000/api/v1/bucketlists/?page=2 (to move to the next page for the current bucketlist returned it is 1 by default)
-    GET:http://127.0.0.1:5000/api/v1/bucketlists/?limit=10 (to limit the reponse to 10 bucketlist)
+    GET: /api/v1/bucketlists/?page=2 (to move to the next page for the current bucketlist returned it is 1 by default)
+    GET: /api/v1/bucketlists/?limit=10 (to limit the reponse to 10 bucketlist)
 ```
 
     
-**Get a single bucketlist. GET http://localhost:5000/api/v1/bucketlists/26/**
+**Get a single bucketlist.**
 
-you must pass a token for this request
+GET: /api/v1/bucketlists/26/
+
+You must pass a token for this request
 
 Response body
 ``` 
@@ -186,9 +196,11 @@ Response body
     }
 ```
     
-**Update a single bucketlist. PUT: /api/v1/bucketlists/26/**
+**Update a single bucketlist.**
 
-you must pass a token for this request
+PUT: /api/v1/bucketlists/26/
+
+You must pass a token for this request
 
 Response body
 ```
@@ -206,9 +218,11 @@ Response body
     }
 ```    
     
-**Delete a single bucketlist. DELETE: /api/v1/bucketlists/26/**
+**Delete a single bucketlist.**
 
-you must pass a token for this request
+DELETE: /api/v1/bucketlists/26/
+
+You must pass a token for this request
 
 Response body
 ```    
@@ -217,9 +231,11 @@ Response body
     }
 ```    
     
-**Create a new item. POST: /api/v1/bucketlists/(id)/items/
+**Create a new item.** 
 
-you must pass a token for this request
+POST: /api/v1/bucketlists/(id)/items/
+
+You must pass a token for this request
 
 Request body
 ```
@@ -242,9 +258,11 @@ Response body
     }
 ```    
 
-**Update a single item. PUT: /api/v1/bucketlists/(id)/items/(item_id)/**
+**Update a single item.**
 
-you must pass a token for this request
+PUT: /api/v1/bucketlists/(id)/items/(item_id)/
+
+You must pass a token for this request
 
 Request body
 ```
@@ -266,9 +284,11 @@ Response body
 ```	
 
    
-**Delete a single item. DELETE: /api/v1/bucketlists/(id)/items/(item_id)/**
+**Delete a single item.**
 
-you must pass a token for this request
+DELETE: /api/v1/bucketlists/(id)/items/(item_id)/
+
+You must pass a token for this request
 
 Response body
 ```        
