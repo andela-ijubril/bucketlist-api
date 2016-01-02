@@ -3,7 +3,7 @@
 Bucketlist Api
 ===============
 
-This repository contains a working bucketlistApi written in Flask
+This repository contains a working bucketlistApi written in Flask.
 
 Requirements
 ------------
